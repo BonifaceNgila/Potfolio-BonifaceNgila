@@ -96,7 +96,13 @@
                 <div class="card-icon"><i class="fas fa-graduation-cap"></i></div>
                 <h3>{{ edu.degree }}</h3>
                 <p class="card-subtitle">{{ edu.institution }}</p>
+                {% if edu.institution_category %}<p class="card-meta" style="margin-bottom: 0.25rem;"><i class="fas fa-tag"></i> {{ edu.institution_category }}</p>{% endif %}
+                {% if edu.start_date %}
+                <p class="card-meta"><i class="fas fa-calendar-alt"></i> {{ edu.start_date }}{% if edu.end_date %} — {{ edu.end_date }}{% else %} — Present{% endif %}</p>
+                {% else %}
                 <p class="card-meta">{{ edu.year }}</p>
+                {% endif %}
+                {% if edu.details %}<p style="margin-top: 0.5rem; font-size: 0.9rem; color: #718096;">{{ edu.details }}</p>{% endif %}
             </div>
             {% endfor %}
         </div>

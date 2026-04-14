@@ -44,6 +44,10 @@ class Education(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     degree = db.Column(db.String(200), nullable=False)
     institution = db.Column(db.String(200), nullable=False)
+    institution_category = db.Column(db.String(100))
+    start_date = db.Column(db.String(20))
+    end_date = db.Column(db.String(20))
+    details = db.Column(db.Text)
     year = db.Column(db.String(50))
     sort_order = db.Column(db.Integer, default=0)
 
@@ -245,6 +249,10 @@ def admin_education_add():
         edu = Education(
             degree=request.form.get("degree", ""),
             institution=request.form.get("institution", ""),
+            institution_category=request.form.get("institution_category", ""),
+            start_date=request.form.get("start_date", ""),
+            end_date=request.form.get("end_date", ""),
+            details=request.form.get("details", ""),
             year=request.form.get("year", ""),
             sort_order=int(request.form.get("sort_order", 0)),
         )
@@ -262,6 +270,10 @@ def admin_education_edit(id):
     if request.method == "POST":
         edu.degree = request.form.get("degree", "")
         edu.institution = request.form.get("institution", "")
+        edu.institution_category = request.form.get("institution_category", "")
+        edu.start_date = request.form.get("start_date", "")
+        edu.end_date = request.form.get("end_date", "")
+        edu.details = request.form.get("details", "")
         edu.year = request.form.get("year", "")
         edu.sort_order = int(request.form.get("sort_order", 0))
         db.session.commit()

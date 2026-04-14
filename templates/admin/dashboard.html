@@ -60,14 +60,15 @@
         {% if educations %}
         <table class="admin-table">
             <thead>
-                <tr><th>Degree</th><th>Institution</th><th>Year</th><th>Order</th><th>Actions</th></tr>
+                <tr><th>Degree</th><th>Institution</th><th>Category</th><th>Duration</th><th>Order</th><th>Actions</th></tr>
             </thead>
             <tbody>
                 {% for edu in educations %}
                 <tr>
                     <td>{{ edu.degree }}</td>
                     <td>{{ edu.institution }}</td>
-                    <td>{{ edu.year }}</td>
+                    <td>{{ edu.institution_category or '—' }}</td>
+                    <td>{{ edu.start_date or '' }}{% if edu.start_date and edu.end_date %} → {% elif edu.start_date %} → Present{% endif %}{{ edu.end_date or '' }}</td>
                     <td>{{ edu.sort_order }}</td>
                     <td class="actions">
                         <a href="{{ url_for('admin_education_edit', id=edu.id) }}" class="btn-icon" title="Edit"><i class="fas fa-edit"></i></a>

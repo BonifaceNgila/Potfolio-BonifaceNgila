@@ -13,15 +13,38 @@
             <label for="institution">Institution</label>
             <input type="text" id="institution" name="institution" value="{{ education.institution if education else '' }}" required>
         </div>
+        <div class="form-group">
+            <label for="institution_category">Institution Category</label>
+            <select id="institution_category" name="institution_category">
+                <option value="">-- Select Category --</option>
+                {% set cats = ["University", "College", "Polytechnic", "Technical Institute", "Online Platform", "Professional Body", "Other"] %}
+                {% for cat in cats %}
+                <option value="{{ cat }}" {% if education and education.institution_category == cat %}selected{% endif %}>{{ cat }}</option>
+                {% endfor %}
+            </select>
+        </div>
         <div class="form-row">
             <div class="form-group">
-                <label for="year">Year</label>
-                <input type="text" id="year" name="year" value="{{ education.year if education else '' }}" placeholder="e.g. November 2019 or Ongoing">
+                <label for="start_date">Start Date</label>
+                <input type="month" id="start_date" name="start_date" value="{{ education.start_date if education else '' }}">
             </div>
             <div class="form-group">
-                <label for="sort_order">Sort Order</label>
-                <input type="number" id="sort_order" name="sort_order" value="{{ education.sort_order if education else 0 }}">
+                <label for="end_date">End Date</label>
+                <input type="month" id="end_date" name="end_date" value="{{ education.end_date if education else '' }}">
+                <small style="color: #718096; font-size: 0.8rem;">Leave blank if ongoing</small>
             </div>
+        </div>
+        <div class="form-group">
+            <label for="year">Display Year (shown on portfolio)</label>
+            <input type="text" id="year" name="year" value="{{ education.year if education else '' }}" placeholder="e.g. November 2019 or Ongoing">
+        </div>
+        <div class="form-group">
+            <label for="details">Details</label>
+            <textarea id="details" name="details" rows="4" placeholder="e.g. Relevant coursework, achievements, thesis topic...">{{ education.details if education else '' }}</textarea>
+        </div>
+        <div class="form-group">
+            <label for="sort_order">Sort Order</label>
+            <input type="number" id="sort_order" name="sort_order" value="{{ education.sort_order if education else 0 }}">
         </div>
         <div class="form-actions">
             <button type="submit" class="btn btn-primary">Save</button>
