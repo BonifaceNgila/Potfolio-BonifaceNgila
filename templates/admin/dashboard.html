@@ -1,0 +1,184 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="dashboard">
+    <h1>Dashboard</h1>
+
+    <!-- Profile -->
+    <div class="admin-section">
+        <div class="section-header">
+            <h2><i class="fas fa-user"></i> Profile</h2>
+            <a href="{{ url_for('admin_profile') }}" class="btn btn-sm">Edit Profile</a>
+        </div>
+        {% if profile %}
+        <p><strong>{{ profile.full_name }}</strong> &mdash; {{ profile.tagline }}</p>
+        {% else %}
+        <p class="text-muted">No profile yet. Click "Edit Profile" to add your details.</p>
+        {% endif %}
+    </div>
+
+    <!-- Experience -->
+    <div class="admin-section">
+        <div class="section-header">
+            <h2><i class="fas fa-briefcase"></i> Experience</h2>
+            <a href="{{ url_for('admin_experience_add') }}" class="btn btn-sm"><i class="fas fa-plus"></i> Add</a>
+        </div>
+        {% if experiences %}
+        <table class="admin-table">
+            <thead>
+                <tr><th>Title</th><th>Company</th><th>Period</th><th>Order</th><th>Actions</th></tr>
+            </thead>
+            <tbody>
+                {% for exp in experiences %}
+                <tr>
+                    <td>{{ exp.job_title }}</td>
+                    <td>{{ exp.company }}</td>
+                    <td>{{ exp.start_date }} &ndash; {{ exp.end_date }}</td>
+                    <td>{{ exp.sort_order }}</td>
+                    <td class="actions">
+                        <a href="{{ url_for('admin_experience_edit', id=exp.id) }}" class="btn-icon" title="Edit"><i class="fas fa-edit"></i></a>
+                        <form method="POST" action="{{ url_for('admin_experience_delete', id=exp.id) }}" class="inline-form" onsubmit="return confirm('Delete this experience?')">
+                            <button type="submit" class="btn-icon btn-danger" title="Delete"><i class="fas fa-trash"></i></button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="text-muted">No experience entries yet.</p>
+        {% endif %}
+    </div>
+
+    <!-- Education -->
+    <div class="admin-section">
+        <div class="section-header">
+            <h2><i class="fas fa-graduation-cap"></i> Education</h2>
+            <a href="{{ url_for('admin_education_add') }}" class="btn btn-sm"><i class="fas fa-plus"></i> Add</a>
+        </div>
+        {% if educations %}
+        <table class="admin-table">
+            <thead>
+                <tr><th>Degree</th><th>Institution</th><th>Year</th><th>Order</th><th>Actions</th></tr>
+            </thead>
+            <tbody>
+                {% for edu in educations %}
+                <tr>
+                    <td>{{ edu.degree }}</td>
+                    <td>{{ edu.institution }}</td>
+                    <td>{{ edu.year }}</td>
+                    <td>{{ edu.sort_order }}</td>
+                    <td class="actions">
+                        <a href="{{ url_for('admin_education_edit', id=edu.id) }}" class="btn-icon" title="Edit"><i class="fas fa-edit"></i></a>
+                        <form method="POST" action="{{ url_for('admin_education_delete', id=edu.id) }}" class="inline-form" onsubmit="return confirm('Delete this education?')">
+                            <button type="submit" class="btn-icon btn-danger" title="Delete"><i class="fas fa-trash"></i></button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="text-muted">No education entries yet.</p>
+        {% endif %}
+    </div>
+
+    <!-- Skills -->
+    <div class="admin-section">
+        <div class="section-header">
+            <h2><i class="fas fa-tools"></i> Skills</h2>
+            <a href="{{ url_for('admin_skill_add') }}" class="btn btn-sm"><i class="fas fa-plus"></i> Add</a>
+        </div>
+        {% if skills %}
+        <table class="admin-table">
+            <thead>
+                <tr><th>Category</th><th>Items</th><th>Order</th><th>Actions</th></tr>
+            </thead>
+            <tbody>
+                {% for skill in skills %}
+                <tr>
+                    <td>{{ skill.category }}</td>
+                    <td>{{ skill.items[:80] }}{% if skill.items|length > 80 %}...{% endif %}</td>
+                    <td>{{ skill.sort_order }}</td>
+                    <td class="actions">
+                        <a href="{{ url_for('admin_skill_edit', id=skill.id) }}" class="btn-icon" title="Edit"><i class="fas fa-edit"></i></a>
+                        <form method="POST" action="{{ url_for('admin_skill_delete', id=skill.id) }}" class="inline-form" onsubmit="return confirm('Delete this skill?')">
+                            <button type="submit" class="btn-icon btn-danger" title="Delete"><i class="fas fa-trash"></i></button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="text-muted">No skill entries yet.</p>
+        {% endif %}
+    </div>
+
+    <!-- Projects -->
+    <div class="admin-section">
+        <div class="section-header">
+            <h2><i class="fas fa-code"></i> Projects</h2>
+            <a href="{{ url_for('admin_project_add') }}" class="btn btn-sm"><i class="fas fa-plus"></i> Add</a>
+        </div>
+        {% if projects %}
+        <table class="admin-table">
+            <thead>
+                <tr><th>Title</th><th>Technologies</th><th>Order</th><th>Actions</th></tr>
+            </thead>
+            <tbody>
+                {% for proj in projects %}
+                <tr>
+                    <td>{{ proj.title }}</td>
+                    <td>{{ proj.technologies }}</td>
+                    <td>{{ proj.sort_order }}</td>
+                    <td class="actions">
+                        <a href="{{ url_for('admin_project_edit', id=proj.id) }}" class="btn-icon" title="Edit"><i class="fas fa-edit"></i></a>
+                        <form method="POST" action="{{ url_for('admin_project_delete', id=proj.id) }}" class="inline-form" onsubmit="return confirm('Delete this project?')">
+                            <button type="submit" class="btn-icon btn-danger" title="Delete"><i class="fas fa-trash"></i></button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="text-muted">No project entries yet.</p>
+        {% endif %}
+    </div>
+
+    <!-- Certifications -->
+    <div class="admin-section">
+        <div class="section-header">
+            <h2><i class="fas fa-certificate"></i> Certifications</h2>
+            <a href="{{ url_for('admin_certification_add') }}" class="btn btn-sm"><i class="fas fa-plus"></i> Add</a>
+        </div>
+        {% if certifications %}
+        <table class="admin-table">
+            <thead>
+                <tr><th>Title</th><th>Issuer</th><th>Date</th><th>Order</th><th>Actions</th></tr>
+            </thead>
+            <tbody>
+                {% for cert in certifications %}
+                <tr>
+                    <td>{{ cert.title }}</td>
+                    <td>{{ cert.issuer }}</td>
+                    <td>{{ cert.date_obtained }}</td>
+                    <td>{{ cert.sort_order }}</td>
+                    <td class="actions">
+                        <a href="{{ url_for('admin_certification_edit', id=cert.id) }}" class="btn-icon" title="Edit"><i class="fas fa-edit"></i></a>
+                        <form method="POST" action="{{ url_for('admin_certification_delete', id=cert.id) }}" class="inline-form" onsubmit="return confirm('Delete this certification?')">
+                            <button type="submit" class="btn-icon btn-danger" title="Delete"><i class="fas fa-trash"></i></button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="text-muted">No certification entries yet.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

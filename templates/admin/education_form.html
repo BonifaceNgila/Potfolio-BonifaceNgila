@@ -1,0 +1,32 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}{{ "Edit" if education else "Add" }} Education{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h1><i class="fas fa-graduation-cap"></i> {{ "Edit" if education else "Add" }} Education</h1>
+    <form method="POST">
+        <div class="form-group">
+            <label for="degree">Degree / Qualification</label>
+            <input type="text" id="degree" name="degree" value="{{ education.degree if education else '' }}" required>
+        </div>
+        <div class="form-group">
+            <label for="institution">Institution</label>
+            <input type="text" id="institution" name="institution" value="{{ education.institution if education else '' }}" required>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="year">Year</label>
+                <input type="text" id="year" name="year" value="{{ education.year if education else '' }}" placeholder="e.g. November 2019 or Ongoing">
+            </div>
+            <div class="form-group">
+                <label for="sort_order">Sort Order</label>
+                <input type="number" id="sort_order" name="sort_order" value="{{ education.sort_order if education else 0 }}">
+            </div>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a href="{{ url_for('admin_dashboard') }}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

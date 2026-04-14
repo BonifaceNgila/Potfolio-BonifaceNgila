@@ -1,0 +1,46 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}{{ "Edit" if experience else "Add" }} Experience{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h1><i class="fas fa-briefcase"></i> {{ "Edit" if experience else "Add" }} Experience</h1>
+    <form method="POST">
+        <div class="form-group">
+            <label for="job_title">Job Title</label>
+            <input type="text" id="job_title" name="job_title" value="{{ experience.job_title if experience else '' }}" required>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="company">Company</label>
+                <input type="text" id="company" name="company" value="{{ experience.company if experience else '' }}" required>
+            </div>
+            <div class="form-group">
+                <label for="location">Location</label>
+                <input type="text" id="location" name="location" value="{{ experience.location if experience else '' }}">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="start_date">Start Date</label>
+                <input type="text" id="start_date" name="start_date" value="{{ experience.start_date if experience else '' }}" placeholder="e.g. March 2024">
+            </div>
+            <div class="form-group">
+                <label for="end_date">End Date</label>
+                <input type="text" id="end_date" name="end_date" value="{{ experience.end_date if experience else '' }}" placeholder="e.g. December 2025 or Present">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="description">Description (one bullet point per line)</label>
+            <textarea id="description" name="description" rows="8">{{ experience.description if experience else '' }}</textarea>
+        </div>
+        <div class="form-group">
+            <label for="sort_order">Sort Order (lower = first)</label>
+            <input type="number" id="sort_order" name="sort_order" value="{{ experience.sort_order if experience else 0 }}">
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a href="{{ url_for('admin_dashboard') }}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
