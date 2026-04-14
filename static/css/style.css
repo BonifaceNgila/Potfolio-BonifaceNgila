@@ -411,6 +411,23 @@ img { max-width: 100%; }
     color: #fff; margin-bottom: 0.5rem;
 }
 .footer p { color: var(--text-muted); font-size: 0.85rem; }
+.admin-link {
+    display: inline-block; margin-top: 0.75rem;
+    font-size: 0.78rem; color: var(--text-muted);
+    opacity: 0.4; transition: all var(--transition);
+    font-family: 'JetBrains Mono', monospace;
+}
+.admin-link:hover { opacity: 1; color: var(--neon); }
+.admin-link i { margin-right: 0.3rem; }
+
+/* Project GitHub Link */
+.project-github-link {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    margin-top: 1rem; font-size: 0.85rem; font-weight: 500;
+    color: var(--neon); transition: all var(--transition);
+    font-family: 'JetBrains Mono', monospace;
+}
+.project-github-link:hover { color: #fff; text-shadow: 0 0 8px rgba(var(--neon-rgb), 0.5); }
 
 /* ── Scroll Reveal ────────────────────────────────────────────────────── */
 .fade-in {

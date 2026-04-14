@@ -17,7 +17,7 @@
             <label for="institution_category">Institution Category</label>
             <select id="institution_category" name="institution_category">
                 <option value="">-- Select Category --</option>
-                {% set cats = ["University", "College", "Polytechnic", "Technical Institute", "Online Platform", "Professional Body", "Other"] %}
+                {% set cats = ["Doctorate / PhD", "Master's Degree", "Bachelor's Degree", "Diploma", "Certificate", "Professional Certification", "Online Course", "Other"] %}
                 {% for cat in cats %}
                 <option value="{{ cat }}" {% if education and education.institution_category == cat %}selected{% endif %}>{{ cat }}</option>
                 {% endfor %}

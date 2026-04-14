@@ -92,12 +92,14 @@ def seed():
             db.session.add(Education(
                 degree="Master of Science in Computer Science",
                 institution="UNICAF University",
+                institution_category="Master's Degree",
                 year="Ongoing",
                 sort_order=1,
             ))
             db.session.add(Education(
                 degree="Bachelor of Business Information Technology",
                 institution="Taita Taveta University",
+                institution_category="Bachelor's Degree",
                 year="November 2019",
                 sort_order=2,
             ))
