@@ -1,7 +1,9 @@
 import os
+import uuid
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.utils import secure_filename
 from functools import wraps
 from flask import session
 
@@ -11,6 +13,16 @@ app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(basedir, "portfolio.db")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", os.urandom(32).hex())
+app.config["UPLOAD_FOLDER"] = os.path.join(basedir, "static", "uploads")
+app.config["MAX_CONTENT_LENGTH"] = 5 * 1024 * 1024  # 5 MB
+
+ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif", "webp"}
+
+os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
+
+
+def allowed_file(filename):
+    return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
 
 db = SQLAlchemy(app)
 
@@ -27,6 +39,7 @@ class Profile(db.Model):
     address = db.Column(db.String(200))
     linkedin = db.Column(db.String(300))
     github = db.Column(db.String(300))
+    profile_picture = db.Column(db.String(300))
 
 
 class Experience(db.Model):
@@ -184,6 +197,18 @@ def admin_profile():
         profile.address = request.form.get("address", "")
         profile.linkedin = request.form.get("linkedin", "")
         profile.github = request.form.get("github", "")
+        # Handle profile picture upload
+        file = request.files.get("profile_picture")
+        if file and file.filename and allowed_file(file.filename):
+            # Delete old picture if exists
+            if profile.profile_picture:
+                old_path = os.path.join(basedir, "static", profile.profile_picture)
+                if os.path.exists(old_path):
+                    os.remove(old_path)
+            ext = secure_filename(file.filename).rsplit(".", 1)[1].lower()
+            filename = f"profile_{uuid.uuid4().hex[:8]}.{ext}"
+            file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
+            profile.profile_picture = f"uploads/{filename}"
         db.session.commit()
         flash("Profile updated.", "success")
         return redirect(url_for("admin_dashboard"))
